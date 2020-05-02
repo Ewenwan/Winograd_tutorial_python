@@ -1,28 +1,40 @@
-# Winograd F(2,3)
+# Winograd F(2,3)  2:输出维度 3：kernel大小
 
 This tutorial shows how to compute wino_f23:
+
+输入矩阵转换
+             ----> 元素乘  ----> 输出转换
+权重矩阵转换
+
 1. define transform matrix
    ```python
+   # kernel转换
    G_F23 = np.array([
         [ 1.0,  0.0, 0.0 ],
         [ 0.5,  0.5, 0.5 ],
         [ 0.5, -0.5, 0.5 ],
         [ 0.0,  0.0, 1.0 ]])
+    # 输入转换矩阵
     Bt_F23 = np.array([
         [ 1.0,  0.0, -1.0,  0.0 ],
         [ 0.0,  1.0,  1.0,  0.0 ],
         [ 0.0, -1.0,  1.0,  0.0 ],
         [ 0.0,  1.0,  0.0, -1.0 ]])
+    # 输出转换矩阵    
     At_F23 = np.array([
         [ 1.0, 1.0,  1.0,  0.0 ],
         [ 0.0, 1.0, -1.0, -1.0 ]])
    ```
 2. compute transformation for input, kernel, output
    ```python
+    # 输入矩阵转换   g' = G*g*G转置 
     def trans_kernel(g):
         return np.dot(np.dot(G_F23,g),G_F23.T)
+    # 权重kernel转换 d' = B转置*d*B转
     def trans_input(d):
         return np.dot(np.dot(Bt_F23,d),Bt_F23.T)
+    # o' = g' * d'
+    # 输出转换 o = A转置*o'*A转
     def trans_output(r):
         return np.dot(np.dot(At_F23,r),At_F23.T)
    ```
