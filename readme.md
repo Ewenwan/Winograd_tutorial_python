@@ -2,9 +2,9 @@
 
 This tutorial shows how to compute wino_f23:
 
-输入矩阵转换
-             ----> 元素乘  ----> 输出转换
-权重矩阵转换
+      输入矩阵转换
+               ----> 元素乘法 gemm算法  ----> 输出转换
+      权重矩阵转换
 
 1. define transform matrix
    ```python
